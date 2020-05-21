@@ -1,0 +1,21 @@
+{
+  "name": "contestbot",
+  "description": "Official contest bot for umjibear server. (C) 2020. All rights reserved.",
+  "version": "10.16.3",
+  "main": "core-ContestBot.js",
+  "scripts": {
+    "start": "node core-ContestBot.js"
+  },
+  "engines": {
+    "node": "10.16.3"
+  },
+  "dependencies": {
+    "@discordjs/opus": "^0.1.0",
+    "discord.js": "^11.6.1",
+    "mongoose": "5.8.4",
+    "node": "^12.13.0",
+    "opusscript": "0.0.7",
+    "request": "2.88.0",
+    "simple-youtube-api": "^5.2.1"
+  }
+}
