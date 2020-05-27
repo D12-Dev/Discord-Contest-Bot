@@ -70,13 +70,8 @@ async function EndEventCommand(Message){
     
 
     await Message.channel.send(`Unmuting and ending event in voice channel: ${EventVc}.`)
-    for(var i = 0;i < EventVc.members;i++){
-       // await EventVc.overwritePermissions(EventVc.members[i], { // Can be changed if you want everyone to be muted after end aswell.
-         //   VIEW_CHANNEL: true,
-       //     CONNECT: false,
-      //      SPEAK: true 
-        //})
-        //unmute everyone
+    for (const [key, value] of EventVc.members) {
+      await value.setMute(false, "[Event auto mute]");
     }
     AlreadyEvent.EventInProgress = false
     AlreadyEvent.EveryoneMuted = false // Can be changed if you want everyone to be muted after end aswell.

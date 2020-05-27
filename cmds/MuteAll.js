@@ -45,7 +45,7 @@ async function MuteAllCommand(Message){
 
         }
         else{
-            await member.setMute(true, "Event auto mute");
+            await member.setMute(true, "[Event auto mute]");
             //await member.addRole(muteRole)
         }
     });

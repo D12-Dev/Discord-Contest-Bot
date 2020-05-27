@@ -27,7 +27,7 @@ async function QueueCommand(Message){
     let EventDoc = await SaveEmbed.findOne({Type: "EventOpenEmbed"})
     if(!EventDoc)return Message.reply("There is no current event to join...")
     console.log(EventDoc.EventQueue.length)
-    if(EventDoc.EventQueue.length == 0)return Message.reply("There are no current participants in this event!")
+    if(EventDoc.EventQueue.length == 0)return Message.reply("There are no more participants in the queue of this event!")
     let ParticipantString = "⠀\n"
     let ParticipantArray = EventDoc.EventQueue
     for(i = 0;i < ParticipantArray.length;i++){

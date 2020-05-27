@@ -32,11 +32,11 @@ async function JoinCommand(Message){
     let BanDoc = await EventBan.findOne({Type: "EventBan", UserID: Message.member.user.id})
     if(BanDoc)return Message.reply("You cannot join because you have been event banned. If you believe this was an unfair ban, please contact an administrator or event manager to be unbanned.")
     if(!Message.member.voiceChannel)return Message.reply("Please join a voice channel to join the event.")
-    try{
-        await Message.delete()
-    }catch(err){
-        console.log(err)
-    }
+   // try{
+    //    await Message.delete()
+   // }catch(err){
+    //    console.log(err)
+    //}
     let ConfirmEmbed = new Discord.RichEmbed()
     .setTitle(`Are you sure you would like to join the current event...`)
     .setDescription(`**This will make you a participant and you will be expected to take part... If you would rather spectate and not participate in the event please run the .spec command instead.**`)
@@ -91,6 +91,7 @@ async function JoinCommand(Message){
         if(Message.member.voiceChannel){
             await Message.member.setVoiceChannel(client.channels.get(EventDoc.EventVoiceChannelID))
         }
+        EventDoc = await SaveEmbed.findOne({Type: "EventOpenEmbed"})
         await EventDoc.Participants.push(Message.member.user.id)
         await EventDoc.EventQueue.push(Message.member.user.id)
         await EventDoc.save()

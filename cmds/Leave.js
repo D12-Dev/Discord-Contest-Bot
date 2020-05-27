@@ -71,7 +71,7 @@ async function LeaveCommand(Message){
             CONNECT: false,
             SPEAK: false
         })*/
-        await Message.member.setMute(false, "Event auto mute");
+        //await Message.member.setMute(false, "Event auto mute");
         await Message.channel.send("Successfully removed you from the event participant list and disconnected you from the voice channel, if you would still want to listen to the event, run the command .spec.")
     }
     else{

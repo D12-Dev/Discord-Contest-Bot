@@ -4,7 +4,7 @@ var client
 module.exports.run = async (member, Client) => {
     client = Client
     try{
-      await MuteMember(member)
+      await UnmuteMember(member)
     }catch(err){
         return 
         /*
@@ -24,6 +24,7 @@ module.exports.help = {
 }
 
 
-async function MuteMember(member){
-    await member.setMute(true, "Event auto mute");
+async function UnmuteMember(member){
+  console.log("Unmuted one")
+    await member.setMute(false, "[Event auto mute]");
 }

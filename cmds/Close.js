@@ -68,6 +68,10 @@ async function CloseEventCommand(Message){
     if(EventVc){
         await EventVc.delete()
     }
+    let EventCategory = client.channels.find(c => c.name == "Events" && c.type == "category")
+    if(EventCategory){
+        await EventCategory.delete()
+    }
     const PrevContestSaved = new PrevContestSaves({
         _id: mongoose.Types.ObjectId(),
         Type: "PrevSavedEvent",

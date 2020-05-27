@@ -43,9 +43,9 @@ async function HelpCommand(Message){
     ///////////////////////////////////////////////////////
     var PageNumber = 1
     var MaxPageNumber = 2 // change this depending on how many pages you have
-    const backwardsFilter = (reaction, user) => reaction.emoji.name === '⬅️' && user.id === receivedMessage.author.id;
-    const forwardsFilter = (reaction, user) => reaction.emoji.name === '➡️' && user.id === receivedMessage.author.id;
-    const deleteFilter = (reaction, user) => reaction.emoji.name === '🚫' && user.id === receivedMessage.author.id;
+    const backwardsFilter = (reaction, user) => reaction.emoji.name === '⬅️' && user.id === Message.author.id;
+    const forwardsFilter = (reaction, user) => reaction.emoji.name === '➡️' && user.id === Message.author.id;
+    const deleteFilter = (reaction, user) => reaction.emoji.name === '🚫' && user.id === Message.author.id;
     const backwards = await SentHelpEmbed.createReactionCollector(backwardsFilter, {time: 100000});
     const forwards = await SentHelpEmbed.createReactionCollector(forwardsFilter, {time: 100000});
     const Delete = await SentHelpEmbed.createReactionCollector(deleteFilter, {time: 100000});

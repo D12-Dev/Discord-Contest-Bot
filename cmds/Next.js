@@ -38,18 +38,19 @@ async function NextCommand(Message){
     if(!AlreadyEvent)return Message.reply("There is no event currently active...")
     if(AlreadyEvent.EventQueue.length == 0)return Message.reply("There are no more participants currently in the queue")
     let EventVc = await client.channels.get(AlreadyEvent.EventVoiceChannelID)
+    //console.log(EventVc.members.size) 
+    for (const [key, value] of EventVc.members) {
+        console.log(value.user.id + " || " + AlreadyEvent.EventQueue[0])
+        if(value.user.id == AlreadyEvent.EventQueue[0]){
+            console.log(value.user.id + " is next up")
+            await value.setMute(false, "[Event auto mute]");
+        }
+        else{
+            await value.setMute(true, "[Event auto mute]");
+        }
+    }
+    await Message.channel.send(`<@${AlreadyEvent.EventQueue[0]}> is next up, glhf.`)
     await AlreadyEvent.EventQueue.shift()
     AlreadyEvent.EveryoneMuted = true
     await AlreadyEvent.save()
-    for(var i = 0;i < EventVc.members;i++){
-        if(EventVc.members[i].user.id == AlreadyEvent.EventQueue[0]){
-            continue
-        }
-        await EventVc.overwritePermissions(EventVc.members[i], {
-            VIEW_CHANNEL: true,
-            CONNECT: false,
-            SPEAK: false
-        })
-    }
-    await Message.channel.send(`<@${AlreadyEvent.EventQueue[0]}> is next up, glhf.`)
 }

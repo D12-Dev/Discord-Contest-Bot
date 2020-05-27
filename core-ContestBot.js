@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const client = new Discord.Client();
 const SaveEmbed = require(`./models/SaveEmbedToDb.js`)
 const VotesSchema = require(`./models/Votes.js`)
+const UnmuteDocSchema = require(`./models/UnmuteDocs.js`)
 const {TOKEN, MongoUrl, PREFIX} = require('./config')
 mongoose.connect(MongoUrl, {
   useNewUrlParser: true,
@@ -156,12 +157,26 @@ client.on("guildCreate",async(guild) => {
  /// UnmuteUtil
 
 client.on('voiceStateUpdate', async(oldMember, newMember) => {
+    if(oldMember.voiceChannel == newMember.voiceChannel)return
     let AlreadyEvent = await SaveEmbed.findOne({Type: "EventOpenEmbed"})
+    if(oldMember.voiceChannel == undefined){
+        // Unmute them if they have an unmute doc.
+        let MuteDoc = await UnmuteDocSchema.findOne({UserID: newMember.id})
+        if(MuteDoc){
+            await newMember.setMute(false, "[Event Auto Mute]")
+            return await MuteDoc.delete()
+        }
+    }
     if(!AlreadyEvent)return
     let EventVc = await client.channels.get(AlreadyEvent.EventVoiceChannelID)
+    if(newMember.voiceChannel == undefined){
+        /// Make unmute doc because they joined
+        let Util = await client.utilities.get("MakeUnmuteDocUtil")
+        return await Util.run(newMember, client)
+    }
     if(oldMember.voiceChannel == EventVc){
         let Util = await client.utilities.get("UnmuteUtil")
-        await Util.run(newMember, client)
+        return await Util.run(newMember, client)
     }
 })
 

@@ -32,41 +32,15 @@ async function JoinCommand(Message){
     let BanDoc = await EventBan.findOne({Type: "EventBan", UserID: Message.member.user.id})
     if(BanDoc)return Message.reply("You cannot join because you have been event banned. If you believe this was an unfair ban, please contact an administrator or event manager to be unbanned.")
     if(!Message.member.voiceChannel)return Message.reply("Please join a voice channel to spectate the event.")
-    try{
-        await Message.delete()
-    }catch(err){
-        console.log(err)
-    }   
+  //  try{
+   //     await Message.delete()
+    //}catch(err){
+    //    console.log(err)
+  //  }   
     //console.log(response)
-    let EventChannel = await client.channels.get(EventDoc.EventVoiceChannelID)
-    if(EventDoc.EveryoneMuted){
-        if(EventDoc.HostId != Message.author.id){
-            /*await EventChannel.overwritePermissions(Message.member, {
-                VIEW_CHANNEL: true,
-                CONNECT: false,
-                SPEAK: false
-            })*/
-            await Message.member.setMute(true, "Event auto mute");
-            //await Message.member.addRole(muteRole)
-        }
-        else{
-           /*await EventChannel.overwritePermissions(Message.member, {
-                VIEW_CHANNEL: true,
-                CONNECT: false,
-                SPEAK: true
-            })  */
-        }
-    }
-    else{
-        /*await EventChannel.overwritePermissions(Message.member, {
-            VIEW_CHANNEL: true,
-            CONNECT: false,
-            SPEAK: true
-        })  */
-    }
-    if(Message.member.voiceChannel){
-        await Message.member.setVoiceChannel(client.channels.get(EventDoc.EventVoiceChannelID))
-    }
+    //if(Message.member.voiceChannel){
+     //   await Message.member.setVoiceChannel(client.channels.get(EventDoc.EventVoiceChannelID))
+    //}
     if(EventDoc.Participants.includes(Message.member.user.id)){
         let ConfirmEmbed = new Discord.RichEmbed()
         .setTitle(`Are you sure you would like to spectate the current event...`)
@@ -88,6 +62,7 @@ async function JoinCommand(Message){
             return await Message.channel.send("Cancelling confirmication...");
         }
         if(response.first().content.toLowerCase() == "yes" || response.first().content.toLowerCase() == "y" || response.first().content.toLowerCase() == "yeah" || response.first().content.toLowerCase() == "yas" || response.first().content.toLowerCase() == "ye"){
+            EventDoc = await SaveEmbed.findOne({Type: "EventOpenEmbed"})
             let valueToRemove = Message.member.user.id
             let filteredMembers = await EventDoc.Participants.filter(item => item !== valueToRemove)
             EventDoc.Participants = filteredMembers
@@ -97,7 +72,27 @@ async function JoinCommand(Message){
                 EventDoc.EventQueue = filteredMembers
             }
             await EventDoc.save()
+            if(EventDoc.EveryoneMuted){
+                if(EventDoc.HostId != Message.author.id){
+        
+                    await Message.member.setMute(true, "Event auto mute");
+                }
+            }
+            if(Message.member.voiceChannel){
+                await Message.member.setVoiceChannel(client.channels.get(EventDoc.EventVoiceChannelID))
+            }
         }
+    }
+    else{
+        if(EventDoc.EveryoneMuted){
+            if(EventDoc.HostId != Message.author.id){
+    
+                await Message.member.setMute(true, "Event auto mute");
+            }
+        }
+        if(Message.member.voiceChannel){
+            await Message.member.setVoiceChannel(client.channels.get(EventDoc.EventVoiceChannelID))
+        }   
     }
     await Message.channel.send("Successfully connected you to the event voice channel, as a spectator enjoy :3.")
 
