@@ -41,7 +41,7 @@ async function CloseEventCommand(Message){
     let AlreadyEvent = await SaveEmbed.findOne({Type: "EventOpenEmbed"})
     if(!AlreadyEvent)return Message.reply("There is no event currently active...")
     let EventVc = await client.channels.get(AlreadyEvent.EventVoiceChannelID)
-    let Channel = await client.channels.get("708411165612441621") //705476558197882920
+    let Channel = await client.channels.get("705476558197882920") //705476558197882920
     let EventChannel = await client.channels.get(AlreadyEvent.TextChannel)
     let EventEmbed = await EventChannel.fetchMessage(AlreadyEvent.EmbedID)
     let ParticipantArray = AlreadyEvent.Participants
@@ -68,10 +68,10 @@ async function CloseEventCommand(Message){
     if(EventVc){
         await EventVc.delete()
     }
-    let EventCategory = client.channels.find(c => c.name == "Events" && c.type == "category")
-    if(EventCategory){
-        await EventCategory.delete()
-    }
+    //let EventCategory = client.channels.find(c => c.name == "Events" && c.type == "category")
+    //if(EventCategory){
+    //    await EventCategory.delete()
+    //}
     const PrevContestSaved = new PrevContestSaves({
         _id: mongoose.Types.ObjectId(),
         Type: "PrevSavedEvent",

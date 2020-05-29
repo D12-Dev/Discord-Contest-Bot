@@ -37,7 +37,7 @@ async function OpenEventCommand(Message){
     }
     let AlreadyEvent = await SaveEmbed.findOne({Type: "EventOpenEmbed"})
     if(AlreadyEvent)return Message.reply("There is already an event active. Please do .close to close the current event.")
-    let PosEventInChannel = client.channels.get('708411002945011836') // Events channel to post in.  709287158116122647
+    let PosEventInChannel = client.channels.get('709287158116122647') // Events channel to post in.  709287158116122647
     if(!PosEventInChannel)return Message.channel.send("No channel to post event in! Ask D12 to set one up!")
     let EventEmbed = new Discord.RichEmbed()
     .setDescription(`**To join the event type .join and you be connected and included in the event.**`)
