@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-# CrossServerNexus
-This is an adaption of the Nexus in which is in my discord server Shadow and Summer. https://discord.gg/QRHtrQj However this version of nexus is fully cross server and has unique setting capabilities.  
-=======
+
 # Discord-Contest-Bot
 A simple event discord bot made for primarily singing competitions (Made originally for Umjiibear discord server). 
 Do what ever you want with this code, use it to your will.
